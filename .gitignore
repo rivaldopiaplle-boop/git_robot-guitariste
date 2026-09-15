@@ -1,0 +1,29 @@
+# Système et éditeurs
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+*.log
+
+# Archives et vidéos : trop lourdes pour Git, elles restent sur la machine
+*.zip
+*.mp4
+*.mov
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# STM32CubeIDE / Eclipse : fichiers générés
+Debug/
+Release/
+.metadata/
+*.o
+*.d
+*.su
+*.elf
+*.map
+*.list
+*.bin
+*.hex
