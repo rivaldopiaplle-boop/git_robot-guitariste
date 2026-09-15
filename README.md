@@ -9,7 +9,7 @@ Projet pluridisciplinaire d'équipe (ENIB, 4ᵉ année) : un robot qui se place 
 ```
 robot-guitariste/
 ├── firmware/
-│   ├── control_guitarra/          micrologiciel STM32F411 (STM32CubeIDE) — version de référence
+│   ├── control_guitarra/          micrologiciel STM32F411 (STM32CubeIDE), version de référence
 │   └── versions-precedentes/      control_guitarra1, control_guitarra2
 ├── simulation/
 │   ├── pythonsimulation/          simulation cinématique du bras (courbes, animation)
