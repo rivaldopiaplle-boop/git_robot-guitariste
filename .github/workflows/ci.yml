@@ -1,0 +1,69 @@
+# Ce que la chaîne vérifie, à chaque poussée de code :
+#
+#   1. le micrologiciel STM32 compile hors de STM32CubeIDE, avec le même
+#      compilateur et les mêmes options que le poste de travail. Un projet
+#      embarqué qui ne compile que dans l'IDE de son auteur n'est pas
+#      reprenable, et c'est justement ce qu'un recruteur veut savoir ;
+#   2. la taille occupée en mémoire est affichée : sur un microcontrôleur, une
+#      modification qui fait déborder la flash doit se voir tout de suite ;
+#   3. la simulation cinématique tourne et produit ses images. Les figures sont
+#      déposées en résultat de l'exécution : on peut les télécharger sans rien
+#      installer.
+#
+# Le dépôt est public : ces minutes ne sont pas décomptées du quota.
+
+name: Micrologiciel et simulation
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  micrologiciel:
+    name: Compiler le micrologiciel STM32
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Installer le compilateur ARM
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends gcc-arm-none-eabi
+
+      - name: Compiler
+        working-directory: firmware/control_guitarra
+        run: make
+
+      - name: Taille en mémoire
+        working-directory: firmware/control_guitarra
+        run: arm-none-eabi-size build/control_guitarra.elf
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: micrologiciel
+          path: |
+            firmware/control_guitarra/build/control_guitarra.elf
+            firmware/control_guitarra/build/control_guitarra.bin
+
+  simulation:
+    name: Rejouer la simulation cinématique
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dépendances
+        run: pip install --quiet numpy matplotlib pillow
+
+      - name: Produire les figures
+        working-directory: simulation
+        run: python produire-figures.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: figures-simulation
+          path: simulation/sorties/

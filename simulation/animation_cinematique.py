@@ -162,7 +162,8 @@ def animate_trajectories(trajectories,
                          fps=30, duration=8.0,
                          trail_length=100,
                          save_gif=False,
-                         gif_name='robot_animation.gif'):
+                         gif_name='robot_animation.gif',
+                         afficher=True):
     """
     Trajectories : liste d'éléments (dict) contenant :
         {
@@ -176,7 +177,9 @@ def animate_trajectories(trajectories,
       - grand axe animation (x-z)
       - à droite deux sous-graphes (theta(t) et d(t)) avec curseur animé
 
-    Paramètres optionnels : A,B, fps, durée, trail_length (queue dessinée)
+    Paramètres optionnels : A,B, fps, durée, trail_length (queue dessinée).
+    `afficher=False` : aucune fenêtre n'est ouverte, ce qui permet de produire
+    les images depuis un script ou une chaîne d'intégration.
     """
     # Validation minimale
     if len(trajectories) == 0:
@@ -318,16 +321,18 @@ def animate_trajectories(trajectories,
                                   blit=True, interval=interval)
 
     plt.tight_layout()
-    plt.show()
 
-    # Sauvegarde optionnelle
+    # L'enregistrement vient AVANT l'affichage : plt.show() ferme la figure, et
+    # la sauvegarde qui suivait rendait un fichier vide.
     if save_gif:
-        try:
-            print('Sauvegarde du GIF...', gif_name)
-            ani.save(gif_name, writer='pillow', fps=fps)
-            print('GIF sauvegardé avec succès.')
-        except Exception as e:
-            print('Erreur lors de la sauvegarde du GIF :', e)
+        print('Enregistrement du GIF :', gif_name)
+        ani.save(gif_name, writer='pillow', fps=fps)
+        print('GIF enregistré.')
+    if afficher:
+        plt.show()
+    else:
+        plt.close(fig)
+    return ani
 
 # ---------------------------
 # Exemple d'utilisation
