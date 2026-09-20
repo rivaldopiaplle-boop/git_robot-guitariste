@@ -27,3 +27,8 @@ Release/
 *.list
 *.bin
 *.hex
+
+# Kinovea : le logiciel d'analyse video lui-meme, installe dans documents/.
+# Il reste sur la machine pour rejouer les analyses, mais 283 fichiers d'un
+# programme tiers n'ont rien a faire dans le depot d'un projet.
+documents/Kinovea/

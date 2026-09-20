@@ -61,11 +61,19 @@ jobs:
       - name: Installer les dépendances
         run: pip install --quiet numpy matplotlib pillow
 
-      - name: Produire les figures
+      - name: Produire les figures de la simulation
         working-directory: simulation
         run: python produire-figures.py
+
+      # Le relevé du geste humain est rejoué lui aussi : si le fichier Kinovea
+      # change, les chiffres de la fiche doivent suivre.
+      - name: Relire le relevé du geste
+        working-directory: analyse-geste
+        run: python analyser-kinovea.py
 
       - uses: actions/upload-artifact@v4
         with:
           name: figures-simulation
-          path: simulation/sorties/
+          path: |
+            simulation/sorties/
+            analyse-geste/sorties/

@@ -20,9 +20,38 @@ robot-guitariste/
 │   ├── produire-figures.py        rejoue la simulation et écrit les images, sans fenêtre
 │   ├── sorties/                   les images produites, celles que montre le portfolio
 │   └── essais/                    les scripts d'essai successifs, gardés pour mémoire
+├── analyse-geste/
+│   ├── analyser-kinovea.py        relit le relevé Kinovea et en tire les chiffres
+│   └── sorties/                   le geste mesuré, sa vitesse, et mesures.json
 ├── cao-solidworks/                pièces, assemblages et animations SolidWorks
-├── documents/                     rapport signé, comptes rendus, planification, vidéos d'analyse (Kinovea)
+│   └── rendus/                    les animations converties, lisibles partout
+├── documents/                     rapport signé, comptes rendus, planification, relevé Kinovea
+│                                  (le logiciel Kinovea lui-même reste hors du dépôt)
 └── archives/                      export d'origine du projet
+```
+
+## Le geste humain, mesuré avant d'être imité
+
+![Le geste du médiator relevé image par image](analyse-geste/sorties/geste-mesure.png)
+
+On ne dimensionne pas un robot guitariste sur une intuition. Le geste a d'abord été filmé
+au ralenti, à cinquante images par seconde, puis suivi point par point dans Kinovea avec un
+étalonnage pris sur l'écart entre deux cordes, onze millimètres. `analyse-geste/` relit ce
+relevé et en tire les chiffres qui contraignent le mécanisme :
+
+| Mesure | Valeur |
+|---|---|
+| Points suivis | 272 sur 5.42 s |
+| Amplitude du balayage | 33.3 mm, soit environ trois cordes |
+| Chemin parcouru par le médiator | 185.7 mm |
+| Vitesse maximale | 465 mm/s |
+| Vitesse moyenne | 34 mm/s |
+
+C'est la cible. Les courbes de la simulation, plus bas, disent ce que le mécanisme sait
+faire ; l'écart entre les deux est ce qui a guidé les choix de conception.
+
+```bash
+cd analyse-geste && python analyser-kinovea.py
 ```
 
 ## La simulation cinématique

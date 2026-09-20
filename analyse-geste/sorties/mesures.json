@@ -1,0 +1,30 @@
+{
+ "etalonnage": {
+  "pixels": 107.9,
+  "reel": 11.0,
+  "unite": "mm",
+  "images_par_seconde": 50.0
+ },
+ "trajectoires": [
+  {
+   "nom": "Trajectoire 1",
+   "points": 272,
+   "duree_s": 5.42,
+   "amplitude_mm": 33.3,
+   "chemin_mm": 185.7,
+   "vitesse_max_mm_s": 465.0,
+   "vitesse_moyenne_mm_s": 34.0,
+   "acceleration_max_mm_s2": 11625.0
+  },
+  {
+   "nom": "Trajectoire 2",
+   "points": 69,
+   "duree_s": 1.36,
+   "amplitude_mm": 37.7,
+   "chemin_mm": 66.5,
+   "vitesse_max_mm_s": 88.0,
+   "vitesse_moyenne_mm_s": 49.0,
+   "acceleration_max_mm_s2": 2296.0
+  }
+ ]
+}
