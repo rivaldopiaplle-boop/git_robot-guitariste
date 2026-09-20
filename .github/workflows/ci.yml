@@ -29,7 +29,9 @@ jobs:
       - name: Installer le compilateur ARM
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends gcc-arm-none-eabi
+          # libnewlib fournit nano.specs, que le paquet du compilateur seul
+          # n'apporte pas : sans lui, la compilation s'arrête au premier fichier.
+          sudo apt-get install -y --no-install-recommends gcc-arm-none-eabi libnewlib-arm-none-eabi
 
       - name: Compiler
         working-directory: firmware/control_guitarra
